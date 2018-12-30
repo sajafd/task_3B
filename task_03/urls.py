@@ -1,26 +1,16 @@
-"""task_03 URL Configuration
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-    
-HEY NOOB, I SEE YOU!
-"""
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from restaurants import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('restaurants/list/',views.restaurant_list ,name='restaurant-list'),
+    path('restaurants/list/',views.RestaurantList.as_view() ,name='restaurant-list'),
     path('restaurants/detail/<restaurant_id>',views.restaurant_detail ,name='restaurant-detail'),
+    # path('restaurants/detail/<restaurant_id>/item-list',views.ItemList.as_view(), name = 'item-list'),
+    path('restaurants/detail/<restaurant_id>/item-list',views.RestaurantItemList.as_view(), name = 'item-list'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
